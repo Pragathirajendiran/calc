@@ -6,7 +6,6 @@ const Calculator = () => {
   const [currentNumber, setCurrentNumber] = useState("");
   const [operations, setOperations] = useState([]);
   const [result, setResult] = useState("");
-
   const isOperator = (value) => ["+", "-", "*", "/"].includes(value);
 
   const handleClick = (value) => {
@@ -110,7 +109,7 @@ const Calculator = () => {
         ))}
         <div className="col-12">
           <button
-            className="btn btn-danger w-100 fs-4 mt-2"
+            className="btn btn-success custom-clear-btn w-100 fs-4 mt-2"
             onClick={handleClear}
           >
             Clear

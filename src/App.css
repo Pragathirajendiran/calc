@@ -98,6 +98,6 @@
 /* Clear Button */
 .calculator-clear-button {
   grid-column: span 4;
-  background-color: #f44336;
+  background-color: #365ff4;
   color: #fff;
 }
