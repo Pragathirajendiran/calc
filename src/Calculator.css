@@ -1,0 +1,31 @@
+.calculator-container {
+  width: 300px;
+  margin: 50px auto;
+  text-align: center;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+button {
+  padding: 15px;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.clear-btn {
+  grid-column: span 4;
+  background-color: #dc3545;
+  color: white;
+}
+
+.result {
+  margin-top: 20px;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 5px;
+}
