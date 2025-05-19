@@ -1,35 +1,66 @@
 import React, { useState } from "react";
-import "./App.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
-const Calc = () => {
+const Calculator = () => {
   const [input, setInput] = useState("");
+  const [currentNumber, setCurrentNumber] = useState("");
+  const [operations, setOperations] = useState([]);
   const [result, setResult] = useState("");
+  const isOperator = (value) => ["+", "-", "*", "/"].includes(value);
 
   const handleClick = (value) => {
-    if (result) {
-      setInput(value);
-      setResult("");
+    if (isOperator(value)) {
+      if (currentNumber === "") return; // prevent operator without number
+      setOperations((prev) => [...prev, currentNumber, value]);
+      setCurrentNumber("");
     } else {
-      setInput((prev) => prev + value);
+      setCurrentNumber((prev) => prev + value);
     }
+    setInput((prev) => prev + value);
   };
 
   const handleClear = () => {
     setInput("");
+    setCurrentNumber("");
+    setOperations([]);
     setResult("");
   };
 
   const calculate = () => {
-    try {
-      const sanitizedInput = input.replace(/[^0-9+\-*/.]/g, "");
-      const evaluatedResult = Function(`return (${sanitizedInput})`)();
-      setResult(evaluatedResult.toString());
-    } catch {
-      setResult("Error");
+    let exp = [...operations, currentNumber];
+    if (exp.length < 3) return setResult(currentNumber || "0");
+
+    let total = parseFloat(exp[0]);
+
+    for (let i = 1; i < exp.length; i += 2) {
+      const operator = exp[i];
+      const nextNum = parseFloat(exp[i + 1]);
+
+      if (isNaN(nextNum)) return setResult("Error");
+
+      switch (operator) {
+        case "+":
+          total += nextNum;
+          break;
+        case "-":
+          total -= nextNum;
+          break;
+        case "*":
+          total *= nextNum;
+          break;
+        case "/":
+          if (nextNum === 0) return setResult("Divide by 0");
+          total /= nextNum;
+          break;
+        default:
+          return setResult("Error");
+      }
     }
+
+    setResult(total.toString());
   };
 
-  const clickButton = [
+  const buttons = [
     "7",
     "8",
     "9",
@@ -49,41 +80,50 @@ const Calc = () => {
   ];
 
   return (
-    <div className="calculator-container">
-      <h2 className="calculator-title">Calculator</h2>
+    <div
+      className="container mt-5 p-4 border rounded shadow"
+      style={{ maxWidth: "400px" }}
+    >
+      <h2 className="text-center mb-4">React Calculator</h2>
+
       <input
         type="text"
         value={input}
-        readOnly
-        className="calculator-display"
+        className="form-control mb-3 text-end fs-4"
         placeholder="0"
+        readOnly
       />
-      <div className="calculator-button-grid">
-        {clickButton.map((btn) => (
-          <button
-            key={btn}
-            className="calculator-button"
-            onClick={() => (btn === "=" ? calculate() : handleClick(btn))}
-          >
-            {btn}
-          </button>
+
+      <div className="row g-2">
+        {buttons.map((btn, index) => (
+          <div className="col-3" key={index}>
+            <button
+              className={`btn ${
+                btn === "=" ? "btn-success" : "btn-secondary"
+              } w-100 fs-4`}
+              onClick={btn === "=" ? calculate : () => handleClick(btn)}
+            >
+              {btn}
+            </button>
+          </div>
         ))}
-        <button
-          className="calculator-button calculator-clear-button"
-          onClick={handleClear}
-        >
-          Clear
-        </button>
+        <div className="col-12">
+          <button
+            className="btn btn-success custom-clear-btn w-100 fs-4 mt-2"
+            onClick={handleClear}
+          >
+            Clear
+          </button>
+        </div>
       </div>
-      {result && (
-        <div
-          style={{ marginTop: "15px", textAlign: "center", fontWeight: "bold" }}
-        >
-          Result: {result}
+
+      {result !== "" && (
+        <div className="alert alert-info mt-4 text-center fs-5">
+          <strong>Result:</strong> {result}
         </div>
       )}
     </div>
   );
 };
 
-export default Calc;
+export default Calculator;

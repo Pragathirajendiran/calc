@@ -84,7 +84,7 @@ const Calculator = () => {
       className="container mt-5 p-4 border rounded shadow"
       style={{ maxWidth: "400px" }}
     >
-      <h2 className="text-center mb-4">React Calculator</h2>
+      <h2 className="text-center mb-4">Simple Desktop Calculator</h2>
 
       <input
         type="text"
