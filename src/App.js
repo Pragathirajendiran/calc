@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-const Calculator = () => {
+const Calc = () => {
   const [input, setInput] = useState("");
   const [currentNumber, setCurrentNumber] = useState("");
   const [operations, setOperations] = useState([]);
   const [result, setResult] = useState("");
   const isOperator = (value) => ["+", "-", "*", "/"].includes(value);
 
-  const handleClick = (value) => {
+  const handleClickToData = (value) => {
     if (isOperator(value)) {
       if (currentNumber === "") return; // prevent operator without number
       setOperations((prev) => [...prev, currentNumber, value]);
@@ -101,7 +101,7 @@ const Calculator = () => {
               className={`btn ${
                 btn === "=" ? "btn-success" : "btn-secondary"
               } w-100 fs-4`}
-              onClick={btn === "=" ? calculate : () => handleClick(btn)}
+              onClick={btn === "=" ? calculate : () => handleClickToData(btn)}
             >
               {btn}
             </button>
@@ -126,4 +126,4 @@ const Calculator = () => {
   );
 };
 
-export default Calculator;
+export default Calc;
