@@ -82,7 +82,6 @@ const Calc = () => {
     setResult(total.toString());
   };
 
-  // Keyboard input support
   useEffect(() => {
     const handleKeyDown = (event) => {
       const key = event.key;
