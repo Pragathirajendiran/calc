@@ -6,11 +6,12 @@ const Calc = () => {
   const [currentNumber, setCurrentNumber] = useState("");
   const [operations, setOperations] = useState([]);
   const [result, setResult] = useState("");
+
   const isOperator = (value) => ["+", "-", "*", "/"].includes(value);
 
   const handleClickToData = (value) => {
     if (isOperator(value)) {
-      if (currentNumber === "") return; // prevent operator without number
+      if (currentNumber === "") return;
       setOperations((prev) => [...prev, currentNumber, value]);
       setCurrentNumber("");
     } else {
@@ -84,7 +85,7 @@ const Calc = () => {
       className="container mt-5 p-4 border rounded shadow"
       style={{ maxWidth: "400px" }}
     >
-      <h2 className="text-center mb-4">React Calculator</h2>
+      <h2 className="text-center mb-4">Desktop Calculation</h2>
 
       <input
         type="text"
